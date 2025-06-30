@@ -1,0 +1,135 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id       Int      @id @default(autoincrement())
+  username String
+  password String
+  level    String
+  status   Boolean
+  clients_created   clients[] @relation("clients_created_by_user")
+  clients_updated   clients[] @relation("clients_updated_by_user")
+  dumpsters_created dumpsters[] @relation("dumpsters_created_by_user")
+  dumpsters_updated dumpsters[] @relation("dumpsters_updated_by_user")
+  rents_created     rent[]    @relation("rents_created_by_user")
+  rents_updated     rent[]    @relation("rents_updated_by_user")
+  residues_created  residues[] @relation("residues_created_by_user")
+  residues_updated  residues[] @relation("residues_updated_by_user")
+  operations_created operations[] @relation("operations_created_by_user")
+  operations_updated operations[] @relation("operations_updated_by_user")
+}
+
+model clients {
+  id             Int     @id @default(autoincrement())
+  name           String
+  phone          String
+  cpf_cnpj       String
+  address        String
+  adress_number  String
+  postal_code    String
+  status         Boolean
+  created_by_user Int
+  updated_by_user Int
+  createdBy      users   @relation("clients_created_by_user", fields: [created_by_user], references: [id])
+  updatedBy      users   @relation("clients_updated_by_user", fields: [updated_by_user], references: [id])
+  rents          rent[]
+}
+
+model dumpsters {
+  id               Int     @id @default(autoincrement())
+  identifier_number String
+  current_location  Int
+  status            Boolean
+  created_by_user   Int
+  updated_by_user   Int
+  createdBy         users   @relation("dumpsters_created_by_user", fields: [created_by_user], references: [id])
+  updatedBy         users   @relation("dumpsters_updated_by_user", fields: [updated_by_user], references: [id])
+  location          locations @relation(fields: [current_location], references: [id])
+  rents             rent[]
+}
+
+model residues {
+  id              Int     @id @default(autoincrement())
+  name            String
+  status          Boolean
+  created_by_user Int
+  updated_by_user Int
+  createdBy       users   @relation("residues_created_by_user", fields: [created_by_user], references: [id])
+  updatedBy       users   @relation("residues_updated_by_user", fields: [updated_by_user], references: [id])
+  rents           rent[]
+}
+
+model rent {
+  id              Int      @id @default(autoincrement())
+  client_id       Int
+  dumpster_id     Int
+  residue_id      Int
+  rent_date       DateTime
+  delivery_date   DateTime
+  status_id       Int
+  created_by_user Int
+  updated_by_user Int
+  client          clients   @relation(fields: [client_id], references: [id])
+  dumpster        dumpsters @relation(fields: [dumpster_id], references: [id])
+  residue         residues  @relation(fields: [residue_id], references: [id])
+  status          status    @relation(fields: [status_id], references: [id])
+  createdBy       users     @relation("rents_created_by_user", fields: [created_by_user], references: [id])
+  updatedBy       users     @relation("rents_updated_by_user", fields: [updated_by_user], references: [id])
+  operations      operations[]
+}
+
+model operations {
+  id              Int      @id @default(autoincrement())
+  rent_id         Int
+  driver_name     String
+  operation_type  String
+  date            DateTime
+  location_id     Int
+  destination     String
+  comments        String
+  status_id       Int
+  created_by_user Int
+  updated_by_user Int
+  rent            rent     @relation(fields: [rent_id], references: [id])
+  status          status   @relation(fields: [status_id], references: [id])
+  createdBy       users    @relation("operations_created_by_user", fields: [created_by_user], references: [id])
+  updatedBy       users    @relation("operations_updated_by_user", fields: [updated_by_user], references: [id])
+  location        locations @relation(fields: [location_id], references: [id])
+}
+
+model status {
+  id    Int    @id @default(autoincrement())
+  name  String
+  code  String
+  color String
+  rents rent[]
+  operations operations[]
+}
+
+model locations {
+  id    Int    @id @default(autoincrement())
+  name  String
+  address String
+  address_number String
+  city String
+  state String
+  zip_code String
+  status Boolean
+  created_at DateTime
+  updated_at DateTime
+  dumpsters dumpsters[]
+  operations operations[]
+}
