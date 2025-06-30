@@ -4,10 +4,15 @@
 
 import type { ColumnDef } from "@tanstack/react-table";
 
+// Define a type that includes accessorKey
+type ColumnDefWithAccessor<TData, TValue = unknown> = ColumnDef<TData, TValue> & {
+  accessorKey?: string & keyof TData;
+};
+
 /**
  * Extract header text from column definition
  */
-const getColumnHeader = (column: ColumnDef<any, any>): string => {
+const getColumnHeader = (column: ColumnDefWithAccessor<any, any>): string => {
   if (typeof column.header === 'string') {
     return column.header;
   }
@@ -29,20 +34,22 @@ const getColumnHeader = (column: ColumnDef<any, any>): string => {
  */
 export const convertToCSV = <TData>(
   data: TData[],
-  columns: ColumnDef<TData, any>[],
-  filename?: string
+  columns: ColumnDef<TData, any>[]
 ): string => {
+  // Cast to ColumnDefWithAccessor internally
+  const columnsWithAccessor = columns as unknown as ColumnDefWithAccessor<TData, any>[];
+  
   if (!data || data.length === 0) {
     return '';
   }
 
   // Get visible columns that have accessorKey (exclude action columns)
-  const visibleColumns = columns.filter(col => 
+  const visibleColumns = columnsWithAccessor.filter(col => 
     col.accessorKey && 
     col.id !== 'actions' &&
     !col.id?.includes('action')
   );
-
+  
   // Create CSV headers
   const headers = visibleColumns.map(col => {
     const header = getColumnHeader(col);
@@ -117,7 +124,7 @@ export const exportToCSV = <TData>(
   filename: string = 'export.csv'
 ): void => {
   try {
-    const csvContent = convertToCSV(data, columns, filename);
+    const csvContent = convertToCSV(data, columns as ColumnDefWithAccessor<TData, any>[]);
     
     if (!csvContent) {
       throw new Error('Nenhum dado para exportar');

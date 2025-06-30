@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
 import { getCurrentUser, hasLevel, hasAnyLevel } from '@/utils/auth';
+import type { ReactNode } from 'react';
 
 interface RoleBasedAccessProps {
   children: ReactNode;

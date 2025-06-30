@@ -32,14 +32,16 @@ const mockColumns: ColumnDef<TestData>[] = [
  */
 export const testCSVConversion = (): boolean => {
   try {
-    const csv = convertToCSV(mockData, mockColumns);
+  
+    // To this (add type assertion)
+    const csv = convertToCSV(mockData, mockColumns as any);
     
     // Check if CSV contains headers
     const lines = csv.split('\n');
     const headers = lines[0];
     
     // Should contain our headers but not actions
-    const expectedHeaders = '"id","name","status","date"';
+    // const expectedHeaders = '"id","name","status","date"';
     
     console.log('Generated CSV:', csv);
     console.log('Headers:', headers);

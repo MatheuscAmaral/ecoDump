@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider, Navigate } from "react-router";
 import { Layout } from "@/components";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Dumpsters from "@/pages/dumpsters";
-import Residues from "@/pages/residues";
+import Residues from "@/pages/Residues";
 import Operations from "@/pages/operations";
 import Rent from "@/pages/rent";
 import SignIn from "@/pages/sign/sign-in";
