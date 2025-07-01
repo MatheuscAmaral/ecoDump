@@ -30,7 +30,7 @@ import {
 import { AdminCSVExportButton } from "@/components/AdminCSVExportButton"
 import type { IDataTable } from "@/interfaces/IDataTable"
 import { statusOptions } from "@/components/StatusFilter";
-import { csvColumns } from "../../../pages/residues/table/columns"
+import { csvColumns } from "../table/columns"
 
 export function DataTable<TData, TValue>({
   columns,
