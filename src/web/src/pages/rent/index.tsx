@@ -16,7 +16,7 @@ const getRents = async (status?: string) => {
 }
 
 const Rent = () => {  
-  const [statusFilter, setStatusFilter] = useState("2") // Default to active
+  const [statusFilter, setStatusFilter] = useState("1") // Default to active
 
   const {
     data = [],
