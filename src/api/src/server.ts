@@ -31,10 +31,17 @@ app.register(require("@fastify/cors"), {
 });
 
 const PORT = Number(process.env.PORT) || 3002;
-app
-  .listen({ port: PORT, host: "0.0.0.0" })
-  .then(() => console.log(`Servidor rodando em http://0.0.0.0:${PORT}`))
-  .catch((err) => {
-    console.error("Erro ao iniciar servidor:", err);
-    process.exit(1);
-  });
+
+// Verifica se está em ambiente de produção (Vercel)
+if (process.env.NODE_ENV !== 'production') {
+  app
+    .listen({ port: PORT, host: "0.0.0.0" })
+    .then(() => console.log(`Servidor rodando em http://0.0.0.0:${PORT}`))
+    .catch((err) => {
+      console.error("Erro ao iniciar servidor:", err);
+      process.exit(1);
+    });
+}
+
+// Exporta a instância do app para serverless functions
+export default app;
