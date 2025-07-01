@@ -22,7 +22,7 @@ export type Residues = {
   updated_by_user: number;
 };
 
-const csvColumns = [
+export const csvColumns = [
   { accessorKey: "id", label: "Código" },
   { accessorKey: "nome", label: "Nome" },
   { accessorKey: "status", label: "Status" },
@@ -30,7 +30,7 @@ const csvColumns = [
   { accessorKey: "atualizadoPorUsuario", label: "Atualizado Por Usuário" },
 ];
 
-const columns: ColumnDef<Residues>[] = [
+export const columns: ColumnDef<Residues>[] = [
   {
     accessorKey: "id",
     
@@ -111,4 +111,4 @@ const columns: ColumnDef<Residues>[] = [
   },
 ];
 
-export { columns, csvColumns };
+export { }
