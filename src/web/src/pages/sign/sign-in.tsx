@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Eye, EyeOff, Loader } from 'lucide-react'; 
 import { useNavigate, Link } from 'react-router';
 import { toast } from 'sonner';
+import logo from "@/assets/logo.png";
 import api from '@/api';
 
 const SignIn = () => {
@@ -136,7 +137,7 @@ const SignIn = () => {
           className="absolute inset-0 flex justify-center items-center"
           style={{ backgroundColor: "rgba(0, 233, 54, 0.493)" }}
         >
-          <img src="/src/assets/logo.png" style={{ width: "320px" }} alt="Logo" />
+          <img src={logo} style={{ width: "320px" }} alt="Logo" />
         </div>
       </section>
     </main>
