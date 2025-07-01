@@ -129,3 +129,15 @@ export const columns: ColumnDef<Rent>[] = [
     },
   },
 ]
+
+export const csvColumns = [
+  { accessorKey: "codigoAluguel", label: "Código do Aluguel" },
+  { accessorKey: "codigoCliente", label: "Código do Cliente" },
+  { accessorKey: "codigoCacamba", label: "Código da Caçamba" },
+  { accessorKey: "codigoResiduo", label: "Código do Resíduo" },
+  { accessorKey: "dataAluguel", label: "Data do Aluguel" },
+  { accessorKey: "dataEntrega", label: "Data da Entrega" },
+  { accessorKey: "status", label: "Status" },
+  { accessorKey: "criadoPorUsuario", label: "Criado Por Usuário" },
+  { accessorKey: "atualizadoPorUsuario", label: "Atualizado Por Usuário" },
+];

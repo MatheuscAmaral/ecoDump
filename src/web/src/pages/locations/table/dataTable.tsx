@@ -29,6 +29,9 @@ import {
 } from "@/components/ui/table";
 import type { IDataTable } from "@/interfaces/IDataTable";
 import { AdminCSVExportButton } from "@/components/AdminCSVExportButton";
+import { statusOptions } from "@/components/StatusFilter";
+import { csvColumns } from "./columns";
+import { formatPostalCode } from "@/utils/formatPostalCode";
 
 export function DataTable<TData, TValue>({
   columns,
@@ -61,6 +64,21 @@ export function DataTable<TData, TValue>({
     },
   });
 
+  const formatCsvData = (data: any) => {
+    return data.map((item: any) => ({
+      id: item.id,
+      nome: item.name,
+      endereco: item.address,
+      cep: formatPostalCode(item.zip_code),
+      numero: item.address_number,
+      cidade: item.city,
+      estado: item.state,
+      status: statusOptions.find((status) => status.value == item.status)?.label,
+      criadoPorUsuario: item.created_by_user,
+      atualizadoPorUsuario: item.updated_by_user,
+    }));
+  };
+
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
@@ -75,9 +93,9 @@ export function DataTable<TData, TValue>({
 
         <div className="ml-auto flex gap-3">
           <AdminCSVExportButton
-            data={table.getFilteredRowModel().rows.map((row) => row.original)}
-            columns={columns}
-            filename="clientes"
+            data={formatCsvData(table.getFilteredRowModel().rows.map((row) => row.original))}
+            columns={csvColumns}
+            filename="localizacoes"
           />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

@@ -29,6 +29,8 @@ import {
 } from "@/components/ui/table";
 import { AdminCSVExportButton } from "@/components/AdminCSVExportButton";
 import type { IDataTable } from "@/interfaces/IDataTable";
+import { statusOptions } from "@/components/StatusFilter";
+import { csvColumns } from "./columns";
 
 export function DataTable<TData, TValue>({
   columns,
@@ -61,6 +63,26 @@ export function DataTable<TData, TValue>({
     },
   });
 
+  const formatCsvData = (data: any) => {
+    return data.map((item: any) => {
+      const location = item.location as {
+        name: string;
+        address: string;
+        city: string;
+        state: string;
+      } | null;
+
+      return {
+        id: item.id,
+        identificador: item.identifier_number,
+        localizacao: location ? `${location.name} - ${location.address} - ${location.city} - ${location.state}` : "-",
+        status: statusOptions.find((status) => status.value == item.status)?.label,
+        criadoPorUsuario: item.created_by_user,
+        atualizadoPorUsuario: item.updated_by_user,
+      };
+    });
+  };
+
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
@@ -80,8 +102,8 @@ export function DataTable<TData, TValue>({
         />
         <div className="ml-auto flex gap-2">
           <AdminCSVExportButton
-            data={table.getFilteredRowModel().rows.map(row => row.original)}
-            columns={columns}
+            data={formatCsvData(table.getFilteredRowModel().rows.map(row => row.original))}
+            columns={csvColumns}
             filename="cacambas"
           />
           <DropdownMenu>
@@ -106,7 +128,7 @@ export function DataTable<TData, TValue>({
                     >
                       {(column.id === "id" && "Código") ||
                         (column.id === "identifier_number" && "Identificador") ||
-                        (column.id === "current_location" && "Localização") ||
+                        (column.id === "location" && "Localização") ||
                         (column.id === "status" && "Status")}
                     </DropdownMenuCheckboxItem>
                   );

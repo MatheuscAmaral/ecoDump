@@ -29,13 +29,8 @@ import {
 } from "@/components/ui/table"
 import { AdminCSVExportButton } from "@/components/AdminCSVExportButton"
 import type { IDataTable } from "@/interfaces/IDataTable"
-
-export type Payment = {
-  id: string
-  amount: number
-  status: "pending" | "processing" | "success" | "failed"
-  email: string
-}
+import { statusOptions } from "@/components/StatusFilter";
+import { csvColumns } from "../../../pages/residues/table/columns"
 
 export function DataTable<TData, TValue>({
   columns,
@@ -68,6 +63,16 @@ export function DataTable<TData, TValue>({
     },
   })
 
+  const formatCsvData = (data: any) => {
+    return data.map((item: any) => ({
+      id: item.id,
+      nome: item.name,
+      status: statusOptions.find((status) => status.value == item.status)?.label,
+      criadoPorUsuario: item.created_by_user,
+      atualizadoPorUsuario: item.updated_by_user,
+    }));
+  };
+
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
@@ -87,8 +92,8 @@ export function DataTable<TData, TValue>({
         />
         <div className="ml-auto flex gap-2">
           <AdminCSVExportButton
-            data={table.getFilteredRowModel().rows.map(row => row.original)}
-            columns={columns}
+            data={formatCsvData(table.getFilteredRowModel().rows.map(row => row.original))}
+            columns={csvColumns}
             filename="residuos"
           />
           <DropdownMenu>

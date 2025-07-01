@@ -102,3 +102,11 @@ export const columns: ColumnDef<Residues>[] = [
     },
   },
 ]
+
+export const csvColumns = [
+  { accessorKey: "id", label: "Código" },
+  { accessorKey: "nome", label: "Nome" },
+  { accessorKey: "status", label: "Status" },
+  { accessorKey: "criadoPorUsuario", label: "Criado Por Usuário" },
+  { accessorKey: "atualizadoPorUsuario", label: "Atualizado Por Usuário" },
+];

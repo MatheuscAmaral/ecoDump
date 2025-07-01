@@ -121,3 +121,16 @@ export const columns: ColumnDef<ILocations>[] = [
     },
   },
 ]
+
+export const csvColumns = [
+  { accessorKey: "id", label: "Código" },
+  { accessorKey: "nome", label: "Nome" },
+  { accessorKey: "endereco", label: "Endereço" },
+  { accessorKey: "cep", label: "CEP" },
+  { accessorKey: "numero", label: "Número" },
+  { accessorKey: "cidade", label: "Cidade" },
+  { accessorKey: "estado", label: "Estado" },
+  { accessorKey: "status", label: "Status" },
+  { accessorKey: "criadoPorUsuario", label: "Criado Por Usuário" },
+  { accessorKey: "atualizadoPorUsuario", label: "Atualizado Por Usuário" },
+];

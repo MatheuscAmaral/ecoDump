@@ -122,3 +122,16 @@ export const columns: ColumnDef<IClients>[] = [
     },
   },
 ]
+
+export const csvColumns = [
+  { accessorKey: "id", label: "Código" },
+  { accessorKey: "nome", label: "Nome" },
+  { accessorKey: "telefone", label: "Telefone" },
+  { accessorKey: "cpfCnpj", label: "CPF/CNPJ" },
+  { accessorKey: "endereco", label: "Endereço" },
+  { accessorKey: "numero", label: "Número" },
+  { accessorKey: "cep", label: "CEP" },
+  { accessorKey: "status", label: "Status" },
+  { accessorKey: "criadoPorUsuario", label: "Criado Por Usuário" },
+  { accessorKey: "atualizadoPorUsuario", label: "Atualizado Por Usuário" },
+];

@@ -119,3 +119,12 @@ export const columns: ColumnDef<Dumpsters>[] = [
     },
   },
 ]
+
+export const csvColumns = [
+  { accessorKey: "id", label: "Código" },
+  { accessorKey: "identificador", label: "Identificador" },
+  { accessorKey: "localizacao", label: "Localização" },
+  { accessorKey: "status", label: "Status" },
+  { accessorKey: "criadoPorUsuario", label: "Criado Por Usuário" },
+  { accessorKey: "atualizadoPorUsuario", label: "Atualizado Por Usuário" },
+];
