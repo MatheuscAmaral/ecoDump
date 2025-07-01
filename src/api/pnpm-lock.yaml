@@ -18,8 +18,8 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3
       '@prisma/client':
-        specifier: ^6.9.0
-        version: 6.10.1(prisma@5.22.0)(typescript@5.8.3)
+        specifier: ^5.20.0
+        version: 5.22.0(prisma@5.22.0)
       bcrypt:
         specifier: ^6.0.0
         version: 6.0.0
@@ -96,16 +96,13 @@ packages:
     resolution: {integrity: sha512-9I2Zn6+NJLfaGoz9jN3lpwDgAYvfGeNYdbAIjJOqzs4Tpc+VU3Jqq4IofSUBKajiDS8k9fZIg18/z13mpk1bsA==}
     engines: {node: '>=8'}
 
-  '@prisma/client@6.10.1':
-    resolution: {integrity: sha512-Re4pMlcUsQsUTAYMK7EJ4Bw2kg3WfZAAlr8GjORJaK4VOP6LxRQUQ1TuLnxcF42XqGkWQ36q5CQF1yVadANQ6w==}
-    engines: {node: '>=18.18'}
+  '@prisma/client@5.22.0':
+    resolution: {integrity: sha512-M0SVXfyHnQREBKxCgyo7sffrKttwE6R8PMq330MIUF0pTwjUhLbW84pFDlf06B27XyCR++VtjugEnIHdr07SVA==}
+    engines: {node: '>=16.13'}
     peerDependencies:
       prisma: '*'
-      typescript: '>=5.1.0'
     peerDependenciesMeta:
       prisma:
-        optional: true
-      typescript:
         optional: true
 
   '@prisma/debug@5.22.0':
@@ -649,10 +646,9 @@ snapshots:
 
   '@lukeed/ms@2.0.2': {}
 
-  '@prisma/client@6.10.1(prisma@5.22.0)(typescript@5.8.3)':
+  '@prisma/client@5.22.0(prisma@5.22.0)':
     optionalDependencies:
       prisma: 5.22.0
-      typescript: 5.8.3
 
   '@prisma/debug@5.22.0': {}
 
