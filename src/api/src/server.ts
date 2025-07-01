@@ -13,7 +13,11 @@ import {
 
 dotenv.config();
 
-const app = Fastify();
+const app = Fastify({
+  logger: true,
+  trustProxy: true
+});
+
 app.register(dumpsterRoutes, { prefix: "/api/dumpsters" });
 app.register(userRoutes, { prefix: "/api/users" });
 app.register(residueRoutes, { prefix: "/api/residues" });
@@ -30,10 +34,9 @@ app.register(require("@fastify/cors"), {
   credentials: true,
 });
 
-const PORT = Number(process.env.PORT) || 3002;
-
-// Verifica se está em ambiente de produção (Vercel)
+// Apenas inicie o servidor se não estiver em ambiente de produção (Vercel)
 if (process.env.NODE_ENV !== 'production') {
+  const PORT = Number(process.env.PORT) || 3002;
   app
     .listen({ port: PORT, host: "0.0.0.0" })
     .then(() => console.log(`Servidor rodando em http://0.0.0.0:${PORT}`))
@@ -43,5 +46,8 @@ if (process.env.NODE_ENV !== 'production') {
     });
 }
 
-// Exporta a instância do app para serverless functions
-export default app;
+// Necessário para o Vercel
+export default async (req: any, res: any) => {
+  await app.ready();
+  app.server.emit('request', req, res);
+};

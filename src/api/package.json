@@ -4,7 +4,7 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "build": "prisma generate && tsc",
-    "start": "node dist/src/server.js"
+    "vercel-build": "prisma generate && tsc"
   },
   "dependencies": {
     "@fastify/cors": "^11.0.1",
