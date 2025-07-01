@@ -13,25 +13,32 @@ import {
 
 dotenv.config();
 
+// Crie a instância do Fastify com opções adequadas para produção
 const app = Fastify({
   logger: true,
   trustProxy: true
 });
 
-app.register(dumpsterRoutes, { prefix: "/api/dumpsters" });
-app.register(userRoutes, { prefix: "/api/users" });
-app.register(residueRoutes, { prefix: "/api/residues" });
-app.register(operationRoutes, { prefix: "/api/operations" });
-app.register(rentRoutes, { prefix: "/api/rents" });
-app.register(statusRoutes, { prefix: "/api/statuses" });
-app.register(clientRoutes, { prefix: "/api/clients" });
-app.register(locationRoutes, { prefix: "/api/locations" });
+// Registre as rotas sem o prefixo /api, pois o Vercel já vai rotear para /api
+app.register(dumpsterRoutes, { prefix: "/dumpsters" });
+app.register(userRoutes, { prefix: "/users" });
+app.register(residueRoutes, { prefix: "/residues" });
+app.register(operationRoutes, { prefix: "/operations" });
+app.register(rentRoutes, { prefix: "/rents" });
+app.register(statusRoutes, { prefix: "/statuses" });
+app.register(clientRoutes, { prefix: "/clients" });
+app.register(locationRoutes, { prefix: "/locations" });
 
 app.register(require("@fastify/cors"), {
   origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
+});
+
+// Adicione uma rota de teste para verificar se a API está funcionando
+app.get('/', async () => {
+  return { status: 'API is running' };
 });
 
 // Apenas inicie o servidor se não estiver em ambiente de produção (Vercel)
